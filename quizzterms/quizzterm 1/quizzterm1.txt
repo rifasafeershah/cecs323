@@ -1,1 +1,24 @@
+Question 1 (1 point)
+Match the following terms to their respective definition. Each term and each definition can only be once.
 
+1. Unified Modeling Language (UML)
+2. Entity - Relationship
+3. Relational Model (RM)
+4. Relational Algebra (RA)
+5. table model
+6. Structured Query Language (SQL)
+
+a. ___ is the formal model of a database that was developed for IBM in the early 1970s by Dr. E.F. Codd. It is largely based on set theory, which makes it both powerful and easy to implement in computers. All modern relational databases are based on this model. We will use it to represent information that does not (and should not) appear in the UML model but is needed for us to build functioning databases. [3. Relational Model (RM)]
+
+b. 
+
+c. 
+
+d.
+
+e.
+
+f.
+
+Question 2 (1 point)
+The term class as we use it in this course
