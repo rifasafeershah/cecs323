@@ -14,12 +14,12 @@ Natural Join
 Inner Join
 20. select customers that live in the same state as one of our offices ordered by customerName (26)
     SELECT *
-    FROM Customers
-    INNER JOIN Offices ON Customers.State = Offices.State;
+    FROM Customers C
+    INNER JOIN Offices O ON C."State" = O."State";
     
 21. select customers that live in the same state as their employee representative works (26)
     SELECT *
-    FROM Customers
-    INNER JOIN Employees ON Employees.EmployeeNumber = Customers.SalesRepresentative
-    INNER JOIN Offices ON Offices.OfficeCode = Employee.OfficeCode
-    WHERE Offices.State = Customers.State;
+    FROM Customers C
+    INNER JOIN Employees E ON E.EmployeeNumber = C.SalesRepresentativeEmployeeNumber
+    INNER JOIN Offices O ON O.OfficeCode = E.OfficeCode
+    WHERE O."State" = C."State";
