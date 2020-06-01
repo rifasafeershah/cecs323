@@ -1,0 +1,50 @@
+Where Clause
+8. select contact firstname, contact lastname and credit limit for all customers where credit limit > 50000 ordered by the last name, then the first name. (85)
+   SELECT ContactFirstName, ContactLastName, CreditLimit
+   FROM Customers
+   WHERE CreditLimit < 50000;
+   
+9. select customers who do not have credit limit (0.00) order by customerName (24)
+   SELECT ContactFirstName, ContactLastName, CreditLimit
+   FROM Customers
+   WHERE CreditLimit = 0;
+   
+10. List all offices not in the USA (4)
+    SELECT *
+    FROM Offices
+    WHERE Country != 'USA';
+    
+11. List orders made between June 16, 2014 and July 7, 2014 (8)
+    SELECT *
+    FROM Orders
+    WHERE OrderDate BETWEEN '2014-06-16' AND '2014-07-07';
+    
+12. List products that we need to reorder (quantityinstock < 1000) (12)
+    SELECT *
+    FROM Products
+    WHERE QuantityInStock < 1000;
+    
+13. List all orders that shipped after the required date (1)
+    SELECT *
+    FROM Orders
+    WHERE ShippedDate > RequiredDate;
+    
+14. List all customers who have the word 'Mini' in their name (10)
+    SELECT *
+    FROM Customers
+    WHERE CustomerName LIKE '%Mini%';
+    
+15. List all products supplied by 'Highway 66 Mini Classics' (9)
+    SELECT *
+    FROM Products
+    WHERE ProductVendor = 'Highway 66 Mini Classics';
+    
+16. List all products not supplied by 'Highway 66 Mini Classics' order by productName (101)
+    SELECT *
+    FROM Products
+    WHERE ProductVendor != 'Highway 66 Mini Classics';
+    
+17. List all employees thqat don't have a manager (1)
+    SELECT *
+    FROM Employees
+    WHERE ReportsTo IS NULL;
