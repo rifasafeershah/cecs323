@@ -1,0 +1,21 @@
+Multi-join
+22. select customerName, orderDate, quantityOrdered, productLine, productName for all orders made and shipped in 2015 (444)
+    SELECT DISTINCT CustomerName, OrderDate, QuantityOrdered, ProductLine, ProductName
+    FROM Customers
+    NATURAL JOIN Orders
+    NATURAL JOIN OrderDetails
+    NATURAL JOIN Products
+    NATURAL JOIN ProductLines
+    WHERE OrderDate BETWEEN '2015-01-01' AND '2015-12-31'AND ShippedDate BETWEEN '2015-01-01' AND '2015-12-31';
+    
+Outer Join
+23. List products that didn't sell (1)
+    SELECT DISTINCT ProductName
+    FROM OrderDetails
+    RIGHT OUTER JOIN Products ON OrderDetails.ProductCode = Products.ProductCode
+    WHERE OrderDetails.ProductCode IS NULL;
+
+24. List all customers and their sales rep even if they don't have a sales rep order by customerName (122)
+    SELECT Customers.CustomerName, Employees.LastName AS EmployeeLastName, Employees.FirstName AS EmployeeFirstName
+    FROM Customers
+    LEFT OUTER JOIN Employees ON Customers.SalesRepresentative = Employees.EmployeeNumber;
