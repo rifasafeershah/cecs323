@@ -1,0 +1,34 @@
+Aggregate Functions
+25. Find the total of all payments made by each customer (98)
+    SELECT CustomerNumber, SUM(Amount) AS "Total Amount "
+    FROM Payments
+    GROUP BY CustomerNumber;
+
+26. Find the largest payment made by a customer (1)
+    SELECT MAX(Amount) AS "Max Amount "
+    FROM Payments;
+    
+    SELECT MAX(TotalAmount) AS "Max Amount "
+    FROM (SELECT SUM(Amount) AS TotalAmount
+          FROM Payments
+          GROUP BY CustomerNumber) AS TotalPayments;
+
+27. Find the average payment made by a customer (1)
+    SELECT AVG(Amount) AS "Average Amount "
+    FROM Payments;
+
+28. What is the total number of products per product line (7)
+    SELECT ProductLine, COUNT(ProductLine) AS "Number of Products "
+    FROM Products
+    GROUP BY ProductLine;
+
+29. What is the number of orders per status (6)
+    SELECT Status, COUNT(OrderNumber) AS "Number of Orders "
+    FROM Orders
+    GROUP BY Status;
+
+30. List all offices and the number of employees working in each office (7)
+    SELECT OfficeCode, COUNT(EmployeeNumber) AS "Number of Employees "
+    FROM Offices
+    NATURAL JOIN Employees
+    GROUP BY OfficeCode;
