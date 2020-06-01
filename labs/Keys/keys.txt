@@ -1,0 +1,94 @@
+CREATE TABLE customers (
+  first_name VARCHAR(20) NOT NULL,
+  last_name VARCHAR(20) NOT NULL,
+  phone VARCHAR(20) NOT NULL,
+  street VARCHAR(50),
+  zipcode VARCHAR(5));
+Expected: Table created called customers
+Result: Execution finished, No errors
+
+INSERT INTO customers (first_name, last_name, phone, street, zipcode)
+VALUES ('Tom', 'Jewett', '562-555-1122', '123 Mockingbird Lane', '90210');
+Expected: Row inserted, No errors
+Result: As Expected
+
+INSERT INTO customers (first_name, last_name, phone, street, zipcode)
+VALUES ('Tom', 'Jewett', '562-555-1122', '123 Mockingbird Lane', '90210');
+Expected: Row inserted, No errors
+Result: As Expected
+
+DELETE FROM customers WHERE first_name = 'Tom';
+Expected: Row deleted where first name is Tom, No errors
+Result: As Expected
+
+ALTER TABLE customers
+ADD CONSRAINT customers_pk
+PRIMARY KEY (first_name, last_name, phone);
+Expected: Primary key added on first name, last name, and phone
+Result: As Expected
+
+INSERT INTO customers (first_name, last_name, phone, street, zipcode)
+VALUES ('Tom', 'Jewett', '562-555-1122', '123 Mockingbird Lane', '90210');
+Expected: Row inserted successfully
+Result: As Expected
+
+INSERT INTO customers (first_name, last_name, phone, street, zipcode)
+VALUES ('Tom', 'Jewett', '562-555-1122', '123 Mockingbird Lane', '90210');
+Expected: Insert failure due to first name, last name, and the phone all duplicates of the prior row (primary key values)
+Result: The statement was aborted due to duplicate key
+
+-- Every table must have at least one superkey, the entire set of columns
+-- Generally, we will not create such a uniqueness constraint because it is
+-- rare that other, more restrictive uniqueness constraits will catch a
+-- duplicate row before this "global" uniqueness constraint does.
+
+ALTER TABLE customers
+ADD CONSTRAINT customer_uk01
+UNIQUE (first_name, last_name, phone, street, zipcode);
+Expected: Constraint added, No errors
+Result: As Expected
+
+INSERT INTO customers (first_name, last_name, phone, street, zipcode)
+VALUES ('Tom', 'Jewett', '562-555-1122', '123 Mockingbird Lane', '90210');
+Expected: Fail due to duplicate key
+Result: As Expected
+
+ALTER TABLE customers
+ADD CONSTRAINT customer_uk02
+UNIQUE (first_name, last_name, phone, street);
+Expected: Constraint added, No errors
+Result: As Expected
+
+ALTER TABLE customers
+ADD CONSTRAINT customer_uk03
+UNIQUE (first_name, last_name, phone, zipcode);
+Expected: Constraint added, No errors
+Result: As Expected
+
+ALTER TABLE customers
+ADD CONSTRAINT customer_uk04
+UNIQUE (first_name, last_name, street, zipcode);
+Expected: Constraint added, No errors
+Result: As Expected
+
+INSERT INTO customers (first_name, last_name, phone, street, zipcode)
+VALUES ('Tom', 'Jewett', '714-888-1212', '123 Mockingbird Lane', '90713');
+Expected: Row inserted, No errors
+Result: As Expected
+
+INSERT INTO customers (first_name, last_name, phone, street, zipcode)
+VALUES ('Tom', 'Jewett', '714-888-7000', '123 Mockingbird Lane', '90210');
+Expected: Should fail due to uk04 constraint first name, last name, street, and zipcode
+Result: As Expected, due to constraint unique key 04
+
+ALTER TABLE customers
+ADD CONSTRAINT customer_uk05
+UNIQUE (first_name, last_name, street);
+Expected: Constraint added fine as it doesn't overlap with the other unique keys
+Result: Actually a failure due to duplicate constraint (though I can't seem to find the duplicate in the indexes tab, and uk05's combination doesn't match any of the prior definitions so I'm not sure if it's user error or intended)
+
+ALTER TABLE customers
+ADD CONSTRAINT customer_uk06
+UNIQUE (first_name, last_name);
+Expected: Constraint's probably going to fail for the similar reason as uk05
+Result: As Expected, there's a duplicate key although it doesn't seem to be listed in the index folder under the customers table dropdown
