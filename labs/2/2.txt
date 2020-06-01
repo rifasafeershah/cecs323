@@ -1,0 +1,10 @@
+CREATE TABLE dcSection (
+  departmentName VARCHAR(50) NOT NULL,
+  courseNumber INTEGER NOT NULL,
+  sectionNumber INTEGER NOT NULL,
+  days VARCHAR(10) NOT NULL,
+  startTime INTEGER NOT NULL,
+  building VARCHAR(10) NOT NULL,
+  roomNo INTEGER NOT NULL,
+  instructor VARCHAR(50) NOT NULL,
+  
