@@ -1,0 +1,25 @@
+Natural Join
+18. Display every order along with the details of that order for order numbers 10270, 10272, 10279 (23)
+    Hint: this can be done two ways. Try both of them. Which is easier if you have a large number of selection criteria?
+    SELECT *
+    FROM Orders
+    NATURAL JOIN OrderDetails
+    WHERE OrderNumber = 10270 OR OrderNumber = 10272 OR OrderNumber = 10279;
+    
+19. List of productlines, the productline's text description and vendors that supply the products in that productline ordered by productLine and productVendor. (65)
+    SELECT DISTINCT ProductLine, TextDescription, ProductVendor
+    FROM Products
+    NATURAL JOIN ProductLines;
+    
+Inner Join
+20. select customers that live in the same state as one of our offices ordered by customerName (26)
+    SELECT *
+    FROM Customers
+    INNER JOIN Offices ON Customers.State = Offices.State;
+    
+21. select customers that live in the same state as their employee representative works (26)
+    SELECT *
+    FROM Customers
+    INNER JOIN Employees ON Employees.EmployeeNumber = Customers.SalesRepresentative
+    INNER JOIN Offices ON Offices.OfficeCode = Employee.OfficeCode
+    WHERE Offices.State = Customers.State;
