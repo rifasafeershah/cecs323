@@ -10,15 +10,96 @@ Match the following terms to their respective definition. Each term and each def
 
 a. ___ is the formal model of a database that was developed for IBM in the early 1970s by Dr. E.F. Codd. It is largely based on set theory, which makes it both powerful and easy to implement in computers. All modern relational databases are based on this model. We will use it to represent information that does not (and should not) appear in the UML model but is needed for us to build functioning databases. [3. Relational Model (RM)]
 
-b. 
+b. ___ is used to build and manipulate relational databases. It is a declarative, rather than a procedural, programming language. In a declarative language, statements expresss/describe/declare what is to be done, rather than provide the specific of how something is to be doen as is the case in procedural languages. Internally, database systems translate SQL to relational algebra. There is a standard for SQL, but database vendors vary in how closely they implement it. This website emphasises the standard and thus examples presented can be executed on all relational database systems with some minor (if necessary at all) changes. [6. Structured Query Language (SQL)]
 
-c. 
+c. ___ model is used in many database development systems. There are many different graphic standards that can represent this model. Some of the most modern of these look very similar to the UML class diagram, but may also include elements of the relational model. [2. Entity-Relationship]
 
-d.
+d. ___ is a formal language used to symbolically manipulate elements of the relational model. As the name suggests it is an algebra like the familiar algebra that operates on numbers, but this one operates on relations that have the data in our relational database. [4. Relational Algebra (RA)]
 
-e.
+e. ___ was designed for software engineering of large systems using object-oriented (OO) programming languages. This language is a very large language; we will use only a small portion of it here, to modle those portions of an enterprise that will be represented in the database. It is our tool for communicating with the client in terms that are used in the enterprise and for communicating with a database developer whose job it is to implement the databse modeled. [1. Unified modeling Language (UML)]
 
-f.
+f. ___ is an informal set of terms for relational model objects. These are the terms used most often by database developers. [5. table model]
 
 Question 2 (1 point)
-The term class as we use it in this course
+The term class as we use it in this course has much in common with the use of that term in your Java or C++ coding, including (check all that apply):
+  A class has a set of static variables and static methods associated with it.
+  What differs from one instance of a class to the next is the state of those instances. [answer]
+  A class has a set of criteria that one can apply conceptually to determine whether a given instance belongs to the class or not. [answer]
+  A class serves as a template, or cookie cutter for constructing instances of that class. [answer]
+
+Question 3 (1 point)
+There will always be some combination, and often more than one, of descriptive attributes which uniquely identifies the members of a class.
+  True
+  False [answer]
+
+Question 4 (1 point)
+In this course, you must include the column names in your insert statements.
+  True [answer]
+  False
+
+Question 5 (1 point)
+The Universal Modeling Language(UML) class diagram contains the following (check all that apply):
+  Primary key of the class.
+  Storage estimates for the table that will implement the class.
+  The class name. [answer]
+  Descriptive attributes of the class. [answer]
+
+Question 6 (1 point)
+The SQL select statement has the following clauses in it (check all that apply):
+  exclude (followed by a Boolean expression to indicate rows that we want filtered out)
+  select [answer]
+  order by [answer]
+  where [answer]
+  from [answer]
+
+Question 7 (1 point)
+Consider the following relation scheme diagram:
+                1.7.
+Check all of the following statements that apply:
+  The entirety of the primary key of Customer either migrates into the primary key of Order or it doesn't. [answer]
+  The chances of getting two customers with the same phone number submitting an order on the same date are astronomically low, so the primary key of Order is fine.
+  We must be able to tell which customer placed the order. If cPhone is unique, then the primary key for Customer is not minimal. If cPhone does not uniquely identify the Customer, then Order could have duplicate rows. [answer]
+  In most cases, the customer's phone number is unique. No one shares a phone number with anyone else. So there is no problem just putting the cphone from Customer into the primary key of Order.
+  
+Question 8 (1 point)
+The following can be said about sets (check all that apply):
+  A set cannot contain duplicate elements. [answer]
+  The elements in a set are not ordered. [answer]
+  Any set my be manipulated with the usual set operators, such as union, intersection and minus. [answer]
+  Each set has membership rules that tell us whether a given element belongs to that set or not. [answer]
+
+Question 9 (1 point)
+The select statement selects from a relation (set), operates on that, and produces another relation (set), which could then be used as the input to another select statement.
+  True [answer]
+  False
+
+Question 10 (5 points)
+Specify the definition that goes with each term.
+
+1. primary key
+2. surrogate key
+3. candidate key
+4. external key
+5. super key
+
+a. ___ A minimal super key, candidate to become the primary key. [3. candidate key]
+
+b. ___ An artificial, meaninglesss, primary key made up by the database designer under certain limited conditions. [2. surrogate key]
+
+c. ___ Any set of attributes whose values, taken together, uniquely identify each row of a table. [5. super key]
+
+d. ___ A surrogate or substitute key that has been defined by an external organization. May be treated as a descriptive attribute in your model. [4. external key]
+
+e. ___ The set of one or more attributes that the designer selects to uniquely identify the table and which will migrate into any child tables. [1. primary key]
+
+Question 11 (1 point)
+While the alter table statements gives us the ability to change a table to add a primary key, it is always best to define the primary key when we define the table so that there is never any opportunity to insert redundant rows into the table.
+  True [answer]
+  False
+
+Question 12 (1 point)
+Suppose that we  want to manage soccer scores in a table. We can say the following about an attribute value like "home: 5, away: 3" (check all that apply):
+  Is difficult to validate. Perhaps someone forgot to enter the word home, or left out the colon, or the numberical value of the score was not an integer. [answer]
+  Is more efficient because it stores more than one piece of information in just one column. That makes this a good approach.
+  It is difficult to search such values. For instance, to find all of the games in which the winner won by more than a 3 point spread would be very difficult. [answer]
+  This value actually represents two individual concepts: the home team score and the away team score. As such, it should be separated into two attributes. [answer]
