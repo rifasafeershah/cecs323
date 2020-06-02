@@ -1,0 +1,9 @@
+Describe the benefits and liabalities of each approach to the key structure.
+
+There would be no surrogrates in the Region class and District class when the only surrogate key we use is the Employee.
+Without any surrogates, a bigger Primary Key is required, hence the more usage of storage space.
+When surrogate keys are used it makes it easier to look up stuff in the database.
+For example, We use ID for Region, District and State instead of names to make it easier and faster to search for it.
+It also makes it convenient and efficient option to go through the database and get a specific result.
+In this case, we also use less processing power.
+This allows us to store more useful information to be stored and accessed when we want to.
