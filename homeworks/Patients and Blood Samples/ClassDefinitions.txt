@@ -1,0 +1,11 @@
+Definitions for the classes
+
+Patient: A patient would be a person who has an appointment with a doctor
+for health check up through blood samples.
+
+Blood Sample: A blood sample is when the patient has gone through the process
+of extracting blood by a doctor to check for amount of saveral substance
+in the patient's blood.
+
+Blood Test: A blood test is a test where the doctors test for amount of substance
+in a patient's blood by testing a sample of the blood.
