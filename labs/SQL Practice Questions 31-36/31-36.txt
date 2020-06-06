@@ -1,0 +1,45 @@
+Having
+31. List the total number of products per product line where number of products > 3 (6)
+    SELECT ProductLine, COUNT(ProductLine) AS "Amount of Products "
+    FROM Products
+    GROUP BY ProductLine
+    HAVING COUNT(ProductLine) > 3;
+
+32. List the orderNumber and order total for all orders that totaled more than $60,000.00. (3)
+    SELECT OrderNumber, SUM(PriceEach * QuantityOrdered) AS "Total Price "
+    FROM OrderDetails
+    GROUP BY OrderNumber
+    HAVING SUM(PriceEach * QuantityOrdered) > 60000;
+
+Computations
+33. List the products and the profit that we have made on them. The profit in each order for a given product is (priceEach - buyPrice) * quantityOrdered. List the product's name and code with the total profit that we have earned selling that product. Order the rows descending by profit. Only show those products whose profit is greater than $60,000.00. (11)
+    SELECT ProductName, SUM(PriceEach - BuyPrice) * QuantityOrdered) AS "Profit "
+    FROM Products
+    NATURAL JOIN OrderDetails
+    GROUP BY ProductName
+    HAVING SUM(PriceEach - BuyPrice) * QuantityOrdered) > 60000;
+
+34. List the average of the money spent on each product across all orders where that product appears when the customer is based in Japan. Show these products in descending order by the average expenditure (45).
+    SELECT ProductName, AVG(QuantityOrdered * PriceEach) AS "Average Money Spent "
+    FROM Customers
+    NATURAL JOIN Orders
+    NATURAL JOIN OrderDetails
+    NATURAL JOIN Products
+    WHERE Customers.Country = 'Japan'
+    GROUP BY ProductName
+    ORDER BY AVG(QuantityOrdered * PriceEach) DESC;
+    
+35. What is the profit per product (MSRP-buyprice). Order by productName. (110)
+    SELECT ProductName, SUM(MSRP - BuyPrice) AS "Profit "
+    FROM PRoducts
+    GROUP BY ProductName
+    ORDER BY PRoductName;
+    
+36. List the Customer Name and their total orders (quantity * priceEach) across all orders that the customer has ever placed with us, in descending order by order total for those customers who have ordered more than $100,000.00 from us ordered by Customer total in descending order. (32)
+    SELECT CustomerName, SUM(QuantityOrdered * PriceEach) AS "Total Orders "
+    FROM Customers
+    NATURAL JOIN Orders
+    NATURAL JOIN OrderDetails
+    GROUP BY CustomerName
+    HAVING SUM(QuantityOrdered * PriceEach) > 100000
+    ORDER BY SUM(QuantityOrdered * PriceEach) DESC;
