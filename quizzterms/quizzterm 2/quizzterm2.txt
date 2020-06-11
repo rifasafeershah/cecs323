@@ -1,1 +1,3 @@
-
+Question 1 (1 point)
+We want to report out all of the employees, the location of their office and the customer that they support as sales rep even if they are not sales representative for any customer. Select the query that will not return all of the rows needed. Note, they all run.
+  select offices.COUNTRY, offices.TERRITORY, offices."STATE",
