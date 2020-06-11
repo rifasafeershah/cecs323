@@ -1,0 +1,14 @@
+Set Operations
+37. List all customers who didn't order in 2015 (78)
+
+38.
+
+39.
+
+40.
+
+41.
+
+42.
+
+43.
