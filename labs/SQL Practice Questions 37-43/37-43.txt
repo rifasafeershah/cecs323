@@ -1,14 +1,104 @@
 Set Operations
 37. List all customers who didn't order in 2015 (78)
+      SELECT DISTINCT CustomerName AS "Customer"
+      FROM Customers
+      WHERE CustomerNumber
+      NOT IN (SELECT CustomerNumber
+              FROM Orders
+              WHERE YEAR(OrderDate) = 2015);
+      
+      SELECT DISTINCT CustomerName AS "Customer"
+      FROM Customers
+      EXCEPT
+      SELECT CustomerName AS "Customer"
+      FROM Customers NATURAL JOIN Orders
+      WHERE YEAR(OrderDate) = 2015;
+      
+38. List all people that we deal with (employees and customer contacs). Display first name, last name, company name (or employee) (145)
+      SELECT ContactFirstName AS "First Name", ContactLastName AS "Last Name", CustomerName AS "Work"
+      FROM Customers
+      UNION
+      SELECT FirstName AS "First Name", LastName AS "Last Name", JobTitle AS "Work"
+      FROM Employees;
+      
+39. List the last name, first name, and employee number of all the employees who do not have any customers. Order by last name first, then the first name. (8)
+      SELECT LastName, FirstName
+      FROM Employees
+      EXCEPT
+      SELECT LastName, FirstName
+      FROM Employees INNER JOIN Customers
+      ON Employees.EmployeeNumber = Customers.SalesRepresentativeEmployeeNumber
+      ORDER BY LastName, FirstName;
+      
+40. List the states and the country that the state is part of that have customers but not offices, offices but not customers, or both one or more 
+customers and one or more offices all in one query. Designate which state is which with the string 'Customer', 'Office', or 'Both'. If a state falls into the "Both" category, do not list it as a Customer or an Office state. Order by the country, then the state. Give the category column (where you list 'Customer', 'Office', or 'Both') a header of "Category" and exclude any entreies in which the state is null. (19)
+      --Customers but not Offices
+        (SELECT "Customer" AS "Category", "State" AS "State", Country AS "Country"
+        FROM Customers
+        WHERE "State" IS NOT NULL
+        EXCEPT
+        SELECT "Customer" AS "Category", "State" AS "State", Country AS "Country"
+        FROM Offices)
+        UNION
+      --Offices but not Customers
+        (SELECT "Office" AS "Category", "State" AS "State", Country AS "Country"
+        FROM Offices
+        WHERE "State" IS NOT NULL
+        EXCEPT
+        SELECT "Office" AS "Category", "State" AS "State", Country AS "Country"
+        FROM Customers)
+        UNION
+      --Both one or more Customers and one or more Offices
+        SELECT "Both" AS "Category", Customers."State" AS "State", Customers.Country AS "Country"
+        FROM Customers INNER JOIN Offices
+        ON Customers."State" = Offices."State" AND Customers.Country = Offices.Country;
+        
+41. List the Product Code and Product name of every product that has never been in an order in which the customer asked for more than 48 of them. Order by the Product Name. (8)
+      SELECT ProductCode, ProductName
+      FROM Products
+      WHERE ProductCode
+      NOT IN (SELECT ProductCode
+              FROM OrderDetails
+              WHERE QuantityOrdered > 48)
+      ORDER BY ProductName;
 
-38.
-
-39.
-
-40.
-
-41.
-
-42.
-
-43.
+42. List the first name and last name of any customer who ordered any products from either of the two product lines 'Trains' or 'Trucks and Buses'. Do not use an "or". Instead perform a union. Order by the customer's name. (61)
+      SELECT ContactFirstName AS "First Name", COntactLastName AS "Last Name"
+      FROM Customers
+      NATURAL JOIN Orders
+      NATURAL JOIN OrderDetails
+      NATURAL JOIN Products
+      WHERE ProductLine = "Trains"
+      UNION
+      SELECT ContactFirstName AS "First Name", ContactLastName AS "Last Name"
+      FROM Customers
+      NATURAL JOIN Orders
+      NATURAL JOIN OrderDetails
+      NATURAL JOIN Products
+      WHERE ProductLine = "Trucks and Buses"
+      ORDER BY "First Name", "Last Name"
+      
+43. List the name of all customers who do not live in the same state and country with any other customer. Do not use a count for this exercise. Order by the customer name.
+This returns 17 if you convert the null states to something like 'N/a' and it returns 10 if you exclude all customers with no state value at all.
+      --17 LINES
+      SELECT CustomerName
+      FROM Customers
+      EXCEPT
+      SELECT DISTINCT A.CustomerName
+      FROM Customers A
+      INNER JOIN Customers B
+      ON A.Country = B.Country
+      AND (A."State" = B."State" OR (A."State" IS NULL AND B."State" IS NULL))
+      AND A.CustomerNumber <> B.CustomerNumber;
+      
+      --10 LINES
+      SELECT CustomerName
+      FROM Customers
+      WHERE "State" IS NOT NULL
+      EXCEPT
+      SELECT A.CustomerName
+      FROM Customers A INNER JOIN Customers B
+      ON A.Country = B.Country
+      AND (A."State" = B."State"
+      OR (A."State" IS NULL AND B."State" IS NULL))
+      AND A.CustomerNumber <> B.CustomerNumber;
