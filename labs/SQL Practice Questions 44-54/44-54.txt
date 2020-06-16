@@ -1,0 +1,64 @@
+Subqueries
+44. What product that makes us the most money (qty*price) (1)
+      SELECT ProductName
+      FROM OrderDetails
+      NATURAL JOIN Products
+      WHERE (QuantityOrdered * PriceEach) = (SELECT MAX(QuantityOrdered * PriceEach)
+                                             FROM OrderDetails);
+      
+45. List the product lines and vendors for product lines which are supported by < 5 vendors (3)
+      SELECT ProductLine, ProductVendor
+      FROM Products
+      NATURAL JOIN (SELECT ProductLine, COUNT(ProductVendor) AS Supporters
+                    FROM Products
+                    GROUP BY ProductLine) B
+      WHERE Supporters > 5;
+      
+46. List the products in the product line with the most number of products (38)
+      SELECT ProductName
+      FROM Products
+      NATURAL JOIN (SELECT ProductLine,
+                    COUNT(ProductLine) AS NumberOfProduct
+                    FROM Products
+                    GROUP BY ProductLine) A
+      WHERE NumberOfProduct = (SELECT MAX(NumberOfProduct)
+                               FROM (SELECT ProductLine,
+                               COUNT(ProductLine) AS NumberOfProduct
+                               FROM Products
+                               GROUP BY ProductLine) B);
+                               
+47. Find the first name and last name of all customer contacts whose customer is located in the same state as the San Francisco office. (11)
+      SELECT ContactFirstName, ContactLastName
+      FROM Customers C
+      WHERE C."State" = (SELECT State
+                         FROM Offices
+                         WHERE City = 'San Francisco');
+                         
+48. What is the customer and sales person of the highest priced order? (1)
+      SELECT CustomerName, (FirstName || ' ' || LastName) AS "Sales Person"
+      FROM Customers
+      JOIN Employees ON Customers.SalesRepresentativeEmployeeNumber = Employees.EmployeeNumber
+      INNER JOIN Orders USING (CustomerNumber)
+      INNER JOIN (SELECT OrderNumber, ExtendedPrice
+                  FROM (SELECT OrderNumber,
+                        SUM(QuantityOrdered * PriceEach) ExtendedPrice
+                        FROM OrderDetails
+                        GROUP By OrderNumber) MaxOrder1
+                  WHERE ExtendedPrice = (SELECT MAX(ExtendedPrice)
+                                         FROM (SELECT OrderNumber,
+                                               SUM(QuantityOrdered * PriceEach) ExtendedPrice
+                                               FROM OrderDetails
+                                               GROUP BY OrderNumber) MaxOrder2 )) Max1
+USING (OrderNumber);
+
+49. What is the order number and the cost of the order for the most expensive orders? Not that there could be more than one order which all happen to add up to the same cost, and the same cost could be the highest cost among all orders. (1)
+
+50. What is the name of the customer, the order number, and the total cost of the most expensive orders? (1)
+
+51. Perform the above query using a view. (1)
+
+52. Show all of the customers who have ordered at least one product with the name "Ford" in it, that "Dragon Souveniers, Ltd." has also ordered. List them in reverse alphabetical order, and do not consider the case of the letters in the customer name in the ordering. Show each customer no more than once. (61)
+
+53. Which products have an MSRP within 5% of the average MSRP accross all products? List the Product Name, the MSRP, and the average MSRP ordered by the product MSRP. (14)
+
+54. List all the customers who have never made a payment on the same date as another customer. Order by customer name. (57)
