@@ -51,14 +51,81 @@ Subqueries
                                                GROUP BY OrderNumber) MaxOrder2 )) Max1
 USING (OrderNumber);
 
-49. What is the order number and the cost of the order for the most expensive orders? Not that there could be more than one order which all happen to add up to the same cost, and the same cost could be the highest cost among all orders. (1)
+49. What is the order number and the cost of the order for the most expensive orders? Note that there could be more than one order which all happen to add up to the same cost, and the same cost could be the highest cost among all orders. (1)
+            SELECT DISTINCT OrderNumber, ExtendedPrice AS TotalCost
+            FROM OrderDetails
+            INNER JOIN (SELECT OrderNumber, ExtendedPrice
+                        FROM (SELECT OrderNumber,
+                              SUM(QuantityOrdered * PriceEach) ExtendedPrice
+                              FROM OrderDetails
+                              GROUP BY OrderNumber) MaxOrder1
+            WHERE ExtendedPrice = (SELECT MAX(ExtendedPrice)
+                                   FROM (SELECT OrderNumber,
+                                         SUM(QuantityOrdered * PriceEach) ExtendedPrice
+                                         FROM OrderDetails
+                                         GROUP BY OrderNumber) MaxOrder2 )) Max1
+USING (OrderNumber);
 
 50. What is the name of the customer, the order number, and the total cost of the most expensive orders? (1)
+            SELECT CustomerName, OrderNumber, ExtendedPrice AS MaxCost
+            FROM Customers
+            INNER JOIN Orders
+            USING (CustomerNumber)
+            INNER JOIN (SELECT OrderNumber, ExtendedPrice
+                        FROM OrderDetails
+                        GROUP BY OrderNumber) MaxOrder1
+            WHERE ExtendedPrice = (SELECT MAX(ExtendedPrice)
+                                   FROM (SELECT OrderNumber,
+                                   SUM(QuantityOrdered * PriceEach) ExtendedPrice
+                                   FROM OrderDetails
+                                   GROUP BY OrderNumber) MaxOrder2 )) Max1
+USING (OrderNumber);
 
 51. Perform the above query using a view. (1)
+CREATE VIEW ViewTemp AS
+SELECT OrderNumber,
+SUM(QuantityOrdered * PriceEach) ExtendedPrice
+FROM OrderDetails
+GROUP BY OrderNumber;
+SELECT CustomerName, OrderNumber, ExtendedPrice AS MaxCost
+FROM Customers
+INNER JOIN Orders
+USING (CustomerNumber)
+INNER JOIN (SELECT OrderNumber, ExtendedPrice
+            FROM (ViewTemp)
+            WHERE ExtendedPrice = (SELECT MAX(ExtendedPrice)
+                                   FROM (ViewTemp))) Max1
+USING (OrderNumber);
 
 52. Show all of the customers who have ordered at least one product with the name "Ford" in it, that "Dragon Souveniers, Ltd." has also ordered. List them in reverse alphabetical order, and do not consider the case of the letters in the customer name in the ordering. Show each customer no more than once. (61)
+      SELECT DISTINCT CustomerName
+      FROM Customers
+      NATURAL JOIN Orders
+      NATURAL JOIN OrderDetails
+      NATURAL JOIN Products
+      WHERE ProductName IN (SELECT ProductName
+                            FROM Customers
+                            NATURAL JOIN Orders
+                            NATURAL JOIN OrderDetails
+                            NATURAL JOIN Products
+                            WHERE ProductName LIKE '%Ford%' AND CustomerName = 'Dragon Souveniers, Ltd.')
+ORDER BY CustomerName DESC;
 
 53. Which products have an MSRP within 5% of the average MSRP accross all products? List the Product Name, the MSRP, and the average MSRP ordered by the product MSRP. (14)
-
+SELECT ProductName, MSRP,
+(SELECT AVG(MSRP)
+ FROM Products) AS AvgMSRP
+ FROM Products
+ WHERE MSRP <= 1.05 * (SELECT AVG(MSRP) FROM Products) AND MSRP >= 0.95 *
+                       SELECT AVG(MSRP) FROM Products);
+                       
 54. List all the customers who have never made a payment on the same date as another customer. Order by customer name. (57)
+SELECT CustomerName, CustomerNumber
+FROM Customers C
+WHERE NOT EXISTS (SELECT PaymentDate
+                  FROM Payments
+                  WHERE CustomerNumber <> C.CustomerNumber
+                  AND PaymentDate IN (SELECT PaymentDate
+                                      FROM Payments P
+                                      WHERE CustomerNumber = C.CustomerNumber))
+ORDER BY CustomerName;
