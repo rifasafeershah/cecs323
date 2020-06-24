@@ -72,6 +72,7 @@ USING (OrderNumber);
             INNER JOIN Orders
             USING (CustomerNumber)
             INNER JOIN (SELECT OrderNumber, ExtendedPrice
+			FROM (SELECT OrderNumber, SUM(QuantityOrdered * PriceEach) ExtendedPrice
                         FROM OrderDetails
                         GROUP BY OrderNumber) MaxOrder1
             WHERE ExtendedPrice = (SELECT MAX(ExtendedPrice)
@@ -116,8 +117,7 @@ SELECT ProductName, MSRP,
 (SELECT AVG(MSRP)
  FROM Products) AS AvgMSRP
  FROM Products
- WHERE MSRP <= 1.05 * (SELECT AVG(MSRP) FROM Products) AND MSRP >= 0.95 *
-                       SELECT AVG(MSRP) FROM Products);
+ WHERE MSRP <= 1.05 * (SELECT AVG(MSRP) FROM Products) AND MSRP >= 0.95 * (SELECT AVG(MSRP) FROM Products);
                        
 54. List all the customers who have never made a payment on the same date as another customer. Order by customer name. (57)
 SELECT CustomerName, CustomerNumber
