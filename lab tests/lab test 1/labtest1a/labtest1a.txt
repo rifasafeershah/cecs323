@@ -1,0 +1,9 @@
+1. List the customer name, year month, and the number of orders that the customer placed during that month in that year, for any customer who placed more than two orders in the same month of the same year.  Order by the number of orders which that customer placed during that month.  Remember that the Derby database has a month() function that extracts the month number from a date value, and the year() function that extracts the year from a date value.  (Returns 4 rows)
+
+2. List the employees last name and first name for all employees who are not the sales representative for any customer.  Order them from lowest to highest by last name, then the first name.  (Returns 8 rows)
+
+3. For each product, display the name of the product and the number of times that it has been ordered in March across all years.  Only show those products that have been ordered in March more than twice.  Order by the number of times ordered, descending and the product name, ascending.  (Returns 28 rows)
+
+4. Display the product name, the order date, and the quantity ordered for every product and order in which the quantity ordered for that product > 76.  (Returns 5 rows)
+
+5. The scale tells the customer how much the model is reduced in size relative to the real thing.  The scale is an attribute of Products (productScale).  For each product line, list the name and description of the product line, and the number of different scales that the products within that product line come in.  Only show those product lines that have more than 5 scales that they offer.  (Returns 6 rows)
