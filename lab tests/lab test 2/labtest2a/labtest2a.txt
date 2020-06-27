@@ -1,0 +1,10 @@
+1.	List the orderNumber and number of products ordered for those orders where the number of products ordered is greater than .9 of the maximum # of products ordered across all orders.  If a given order has 3 of one item, 2 of another and 5 of a third, there are just three distinct items ordered.  Order in descending order by the number of items ordered.  
+Hint – Remember that the value that you search for in the Having clause of your SQL could, itself, be the result of a query.  Just remember to enclose that query in parenthesis.  (26)
+
+2.	List the product name, quantity ordered, order date, and customer name for every product order in which the quantity ordered of that product in that order beat the average quantity ordered of all products by 40 or more.  (8)
+
+3.	What product has the most value in our inventory (QuantityInStock*MSRP)? (1)
+
+4.	List all of the customers and the largest payment they have made, who have made at least one payment that is equal to the largest payment that we have ever had.  Note that there might be more than one customer who has made a payment that large.  Order them in ascending order by customer name.  (1)
+
+5.	List the last name and first name of all employees, indicating whether they are managers or not.  For those who are managers, the third column of your report should read “Management”.  For the rest of the employees, that third column should read “Member Technical Staff”.  Remember that the Employees table has the reportsto column to indicate the employee number of the Employee that they report to.  If a given employee number never shows up in reportsto for any employee, that means that no one reports to that employee.  List the employees ordered by last name, then first name.  (23)
