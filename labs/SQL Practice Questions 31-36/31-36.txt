@@ -19,7 +19,8 @@ Computations
     GROUP BY ProductName
     HAVING SUM(PriceEach - BuyPrice) * QuantityOrdered) > 60000;
 
-34. List the average of the money spent on each product across all orders where that product appears when the customer is based in Japan. Show these products in descending order by the average expenditure (45).
+34. List the average of the money spent on each product across all orders where that product appears when the customer is based in Japan.
+Show these products in descending order by the average expenditure (45).
     SELECT ProductName, AVG(QuantityOrdered * PriceEach) AS "Average Money Spent "
     FROM Customers
     NATURAL JOIN Orders
